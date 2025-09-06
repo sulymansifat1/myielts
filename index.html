@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Practice - Listening, Reading & Writing</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Modal for Test Mode Selection -->
+    <div id="testModeModal" class="modal">
+        <div class="modal-content">
+            <h2>Choose Your Practice Mode</h2>
+            <div class="mode-options">
+                <div class="mode-option" id="fullTestMode">
+                    <h3>Full Mock Test</h3>
+                    <p>Complete IELTS test with timers</p>
+                    <ul>
+                        <li>Listening: 30 minutes</li>
+                        <li>Reading: 60 minutes</li>
+                        <li>Writing: 60 minutes</li>
+                        <li>Progress tracking</li>
+                    </ul>
+                </div>
+                <div class="mode-option" id="individualMode">
+                    <h3>Individual Practice</h3>
+                    <p>Practice individual sections</p>
+                    <ul>
+                        <li>Adjustable timers for each section</li>
+                        <li>Independent section practice</li>
+                        <li>No overall time limit</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="mode-btn full-test-btn" id="fullTestBtn">Start Full Test</button>
+                <button class="mode-btn individual-btn" id="individualBtn">Start Individual Practice</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer" style="display: none;">
+        <header>
+            <div class="header-left">
+                <button id="changeModeBtn" class="change-mode-btn" style="display: none;">← Change Mode</button>
+                <button id="darkModeBtn" class="dark-mode-btn">🌙</button>
+            </div>
+            <h1>IELTS Practice Test</h1>
+            <div class="timer-display" id="mainTimerDisplay">
+                <span id="timer">00:00:00</span>
+                <button id="startBtn" class="start-btn">Start Timer</button>
+                <button id="pauseBtn" style="display: none;">Pause</button>
+                <button id="resetBtn" style="display: none;">Reset</button>
+            </div>
+        </header>
+
+        <nav class="section-nav">
+            <button class="nav-btn active" data-section="listening">Listening</button>
+            <button class="nav-btn" data-section="reading">Reading</button>
+            <button class="nav-btn" data-section="writing">Writing</button>
+        </nav>
+
+        <main>
+            <!-- Listening Section -->
+            <section id="listening" class="section active">
+                <div class="section-header">
+                    <h2>Listening Section</h2>
+                    <div class="section-controls">
+                        <div class="time-settings">
+                            <label>Time (minutes):</label>
+                            <input type="number" id="listening-time" value="30" min="10" max="60" class="time-input">
+                            <button id="start-listening" class="section-start-btn">Start Listening</button>
+                        </div>
+                        <div class="section-timer">
+                            <span id="listening-timer">30:00</span>
+                            <button id="pause-listening" class="section-pause-btn" style="display: none;">Pause</button>
+                            <button id="reset-listening" class="section-reset-btn" style="display: none;">Reset</button>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="questions-container">
+                    <div class="question-group">
+                        <h3>Questions 1-10</h3>
+                        <p>Complete the notes below. Write <strong>NO MORE THAN TWO WORDS AND/OR A NUMBER</strong> for each answer.</p>
+                        
+                        <div class="fill-gap">
+                            <label>1. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>2. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>3. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>4. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>5. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>6. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>7. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>8. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>9. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>10. <input type="text" class="gap-input"></label>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h3>Questions 11-20</h3>
+                        <p>Complete the table below. Write <strong>NO MORE THAN THREE WORDS</strong> for each answer.</p>
+                        
+                        <div class="fill-gap">
+                            <label>11. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>12. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>13. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>14. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>15. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>16. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>17. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>18. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>19. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>20. <input type="text" class="gap-input"></label>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h3>Questions 21-30</h3>
+                        <p>Complete the notes below. Write <strong>NO MORE THAN TWO WORDS AND/OR A NUMBER</strong> for each answer.</p>
+                        
+                        <div class="fill-gap">
+                            <label>21. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>22. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>23. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>24. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>25. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>26. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>27. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>28. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>29. <input type="text" class="gap-input"></label>
+                        </div>
+                        <div class="fill-gap">
+                            <label>30. <input type="text" class="gap-input"></label>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h3>Questions 31-40</h3>
+                        <p>Complete the summary below. Write <strong>NO MORE THAN THREE WORDS</strong> for each answer.</p>
+                        
+                        <div class="summary-completion">
+                            <p>31. <input type="text" class="gap-input"></p>
+                            <p>32. <input type="text" class="gap-input"></p>
+                            <p>33. <input type="text" class="gap-input"></p>
+                            <p>34. <input type="text" class="gap-input"></p>
+                            <p>35. <input type="text" class="gap-input"></p>
+                            <p>36. <input type="text" class="gap-input"></p>
+                            <p>37. <input type="text" class="gap-input"></p>
+                            <p>38. <input type="text" class="gap-input"></p>
+                            <p>39. <input type="text" class="gap-input"></p>
+                            <p>40. <input type="text" class="gap-input"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reading Section -->
+            <section id="reading" class="section">
+                <div class="section-header">
+                    <h2>Reading Section</h2>
+                    <div class="section-controls">
+                        <div class="time-settings">
+                            <label>Time (minutes):</label>
+                            <input type="number" id="reading-time" value="60" min="20" max="120" class="time-input">
+                            <button id="start-reading" class="section-start-btn">Start Reading</button>
+                        </div>
+                        <div class="section-timer">
+                            <span id="reading-timer">60:00</span>
+                            <button id="pause-reading" class="section-pause-btn" style="display: none;">Pause</button>
+                            <button id="reset-reading" class="section-reset-btn" style="display: none;">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="passage">
+                    <h3>Reading Passage 1</h3>
+                    <div class="passage-text">
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="questions-container">
+                    <div class="question-group">
+                        <h3>Questions 1-13</h3>
+                        <p>Complete the summary below. Choose <strong>NO MORE THAN TWO WORDS</strong> from the passage for each answer.</p>
+                        
+                        <div class="summary-completion">
+                            <p>1. <input type="text" class="gap-input"></p>
+                            <p>2. <input type="text" class="gap-input"></p>
+                            <p>3. <input type="text" class="gap-input"></p>
+                            <p>4. <input type="text" class="gap-input"></p>
+                            <p>5. <input type="text" class="gap-input"></p>
+                            <p>6. <input type="text" class="gap-input"></p>
+                            <p>7. <input type="text" class="gap-input"></p>
+                            <p>8. <input type="text" class="gap-input"></p>
+                            <p>9. <input type="text" class="gap-input"></p>
+                            <p>10. <input type="text" class="gap-input"></p>
+                            <p>11. <input type="text" class="gap-input"></p>
+                            <p>12. <input type="text" class="gap-input"></p>
+                            <p>13. <input type="text" class="gap-input"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="passage">
+                    <h3>Reading Passage 2</h3>
+                    <div class="passage-text">
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="questions-container">
+                    <div class="question-group">
+                        <h3>Questions 14-26</h3>
+                        <p>Complete the sentences below. Write <strong>NO MORE THAN THREE WORDS</strong> for each answer.</p>
+                        
+                        <div class="sentence-completion">
+                            <p>14. <input type="text" class="gap-input"></p>
+                            <p>15. <input type="text" class="gap-input"></p>
+                            <p>16. <input type="text" class="gap-input"></p>
+                            <p>17. <input type="text" class="gap-input"></p>
+                            <p>18. <input type="text" class="gap-input"></p>
+                            <p>19. <input type="text" class="gap-input"></p>
+                            <p>20. <input type="text" class="gap-input"></p>
+                            <p>21. <input type="text" class="gap-input"></p>
+                            <p>22. <input type="text" class="gap-input"></p>
+                            <p>23. <input type="text" class="gap-input"></p>
+                            <p>24. <input type="text" class="gap-input"></p>
+                            <p>25. <input type="text" class="gap-input"></p>
+                            <p>26. <input type="text" class="gap-input"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="passage">
+                    <h3>Reading Passage 3</h3>
+                    <div class="passage-text">
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="questions-container">
+                    <div class="question-group">
+                        <h3>Questions 27-40</h3>
+                        <p>Complete the summary below. Choose <strong>NO MORE THAN TWO WORDS</strong> from the passage for each answer.</p>
+                        
+                        <div class="summary-completion">
+                            <p>27. <input type="text" class="gap-input"></p>
+                            <p>28. <input type="text" class="gap-input"></p>
+                            <p>29. <input type="text" class="gap-input"></p>
+                            <p>30. <input type="text" class="gap-input"></p>
+                            <p>31. <input type="text" class="gap-input"></p>
+                            <p>32. <input type="text" class="gap-input"></p>
+                            <p>33. <input type="text" class="gap-input"></p>
+                            <p>34. <input type="text" class="gap-input"></p>
+                            <p>35. <input type="text" class="gap-input"></p>
+                            <p>36. <input type="text" class="gap-input"></p>
+                            <p>37. <input type="text" class="gap-input"></p>
+                            <p>38. <input type="text" class="gap-input"></p>
+                            <p>39. <input type="text" class="gap-input"></p>
+                            <p>40. <input type="text" class="gap-input"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Writing Section -->
+            <section id="writing" class="section">
+                <div class="section-header">
+                    <h2>Writing Section</h2>
+                </div>
+
+                <div class="writing-tasks">
+                    <div class="task">
+                        <div class="task-header">
+                            <h3>Task 1</h3>
+                            <div class="task-controls">
+                                <div class="time-settings">
+                                    <label>Time (minutes):</label>
+                                    <input type="number" id="task1-time" value="20" min="5" max="60" class="time-input">
+                                    <button id="start-task1" class="task-start-btn">Start Task 1</button>
+                                </div>
+                                <div class="task-timer">
+                                    <span id="task1-timer">20:00</span>
+                                    <button id="pause-task1" class="task-pause-btn" style="display: none;">Pause</button>
+                                    <button id="reset-task1" class="task-reset-btn" style="display: none;">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="writing-area">
+                            <textarea id="task1-text" placeholder="Write your response here..." spellcheck="false"></textarea>
+                            <div class="word-count">Words: <span id="task1-count">0</span></div>
+                        </div>
+                    </div>
+
+                    <div class="task">
+                        <div class="task-header">
+                            <h3>Task 2</h3>
+                            <div class="task-controls">
+                                <div class="time-settings">
+                                    <label>Time (minutes):</label>
+                                    <input type="number" id="task2-time" value="40" min="10" max="120" class="time-input">
+                                    <button id="start-task2" class="task-start-btn">Start Task 2</button>
+                                </div>
+                                <div class="task-timer">
+                                    <span id="task2-timer">40:00</span>
+                                    <button id="pause-task2" class="task-pause-btn" style="display: none;">Pause</button>
+                                    <button id="reset-task2" class="task-reset-btn" style="display: none;">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="writing-area">
+                            <textarea id="task2-text" placeholder="Write your response here..." spellcheck="false"></textarea>
+                            <div class="word-count">Words: <span id="task2-count">0</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="controls">
+                <button id="nextSectionBtn" class="next-section-btn" style="display: none;">Go to Next Section</button>
+                <button id="finishTestBtn" class="finish-test-btn" style="display: none;">Finish Test</button>
+                <button id="saveBtn" class="save-btn">Save Progress</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Custom Alert Modal -->
+    <div id="customAlertModal" class="modal" style="display: none;">
+        <div class="modal-content alert-modal">
+            <div class="alert-icon">
+                <span id="alertIcon">⚠️</span>
+            </div>
+            <h2 id="alertTitle">Alert</h2>
+            <p id="alertMessage">This is an alert message.</p>
+            <div class="alert-buttons">
+                <button id="alertOk" class="alert-btn alert-ok">OK</button>
+                <button id="alertCancel" class="alert-btn alert-cancel" style="display: none;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
