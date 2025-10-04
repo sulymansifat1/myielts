@@ -1,0 +1,16 @@
+/* Scoped TTS section styles (namespaced under #tts-section) */
+#tts-section {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+#tts-section .tts-container{max-width:1200px;margin:0 auto;padding:16px;background:linear-gradient(135deg,#1a1a2e,#0f3460);color:#e0e0e0;border-radius:12px}
+#tts-section .tts-header{text-align:center;margin-bottom:12px}
+#tts-section .tts-header h2{color:#64ffda;margin-bottom:6px}
+#tts-section .tts-main{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}
+#tts-section textarea{width:100%;min-height:220px;padding:12px;border-radius:8px;border:1px solid #333;background:#2d2d3d;color:#e0e0e0}
+#tts-section .tts-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+#tts-section .tts-buttons button{margin-left:8px}
+#tts-section .tts-player{background:#1e1e2e;padding:12px;border-radius:8px;border:1px solid #333}
+#tts-section .tts-progress-bar{width:100%;height:8px;background:#37474f;border-radius:4px;overflow:hidden;margin-bottom:8px}
+#tts-section .tts-progress{height:100%;background:linear-gradient(45deg,#64ffda,#00bcd4);width:0%}
+#tts-section .tts-status{margin-top:10px;padding:10px;background:#2d2d3d;border-radius:6px;text-align:center;border-left:4px solid #64ffda}
+#tts-section .tts-btn{padding:8px 12px;border-radius:6px;border:none;cursor:pointer;background:#37474f;color:#e0e0e0}
+#tts-section .tts-btn.primary{background:linear-gradient(45deg,#64ffda,#00bcd4);color:#1a1a2e}
+@media (max-width:1024px){#tts-section .tts-main{grid-template-columns:1fr}}
