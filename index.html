@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS Practice - Listening, Reading & Writing</title>
+    <title>IELTS Practice by Sifat</title>
     <link rel="stylesheet" href="styles.css">
+        <!-- TTS section styles -->
+        <link rel="stylesheet" href="public/sections/tts/tts-section.css">
 </head>
 <body>
     <!-- Modal for Test Mode Selection -->
@@ -45,7 +47,7 @@
                 <button id="changeModeBtn" class="change-mode-btn" style="display: none;">← Change Mode</button>
                 <button id="darkModeBtn" class="dark-mode-btn">🌙</button>
             </div>
-            <h1>IELTS Practice Test</h1>
+            <h1>IELTS Practice by Sifat</h1>
             <div class="timer-display" id="mainTimerDisplay">
                 <span id="timer">00:00:00</span>
                 <button id="startBtn" class="start-btn">Start Timer</button>
@@ -58,6 +60,7 @@
             <button class="nav-btn active" data-section="listening">Listening</button>
             <button class="nav-btn" data-section="reading">Reading</button>
             <button class="nav-btn" data-section="writing">Writing</button>
+            <button class="nav-btn" data-section="tts">TTS</button>
         </nav>
 
         <main>
@@ -75,6 +78,7 @@
                             <span id="listening-timer">30:00</span>
                             <button id="pause-listening" class="section-pause-btn" style="display: none;">Pause</button>
                             <button id="reset-listening" class="section-reset-btn" style="display: none;">Reset</button>
+                            <button id="listening-refresh" class="section-refresh-btn" type="button" title="Clear all answers">↺</button>
                         </div>
                     </div>
                 </div>
@@ -209,6 +213,81 @@
                 </div>
             </section>
 
+                        <!-- Text-to-Speech Section -->
+                        <section id="tts" class="section">
+                                <!-- Embedded TTS module (namespaced inside #tts-section) -->
+                                <div id="tts-section" class="tts-section">
+                                    <div class="tts-container">
+                                        <header class="tts-header">
+                                            <h2>Text-to-Speech</h2>
+                                            <p>Convert your text to a natural-sounding voice.</p>
+                                        </header>
+
+                                        <div class="tts-main">
+                                            <div class="tts-input">
+                                                <label for="tts-text-input">Enter text (max 5000 words)</label>
+                                                <textarea id="tts-text-input" placeholder="Paste your text here..." rows="10"></textarea>
+                                                <div class="tts-row tts-controls">
+                                                    <div class="tts-wordcount">Words: <span id="tts-wordcount">0</span></div>
+                                                    <div class="tts-buttons">
+                                                        <button id="tts-play" class="tts-btn primary" disabled data-state="ready">Play</button>
+                                                    </div>
+                                                </div>
+                                                <!-- Horizontal answer inputs for listening practice -->
+                                                <div class="tts-answer-bar" aria-label="Answer inputs for listening">
+                                                    <div class="tts-answer-item"><span>1.</span><input type="text" class="tts-answer" /></div>
+                                                    <div class="tts-answer-item"><span>2.</span><input type="text" class="tts-answer" /></div>
+                                                    <div class="tts-answer-item"><span>3.</span><input type="text" class="tts-answer" /></div>
+                                                    <div class="tts-answer-item"><span>4.</span><input type="text" class="tts-answer" /></div>
+                                                    <div class="tts-answer-item"><span>5.</span><input type="text" class="tts-answer" /></div>
+                                                    <div class="tts-answer-item"><span>6.</span><input type="text" class="tts-answer" /></div>
+                                                    <div class="tts-answer-item"><span>7.</span><input type="text" class="tts-answer" /></div>
+                                                    <div class="tts-answer-item"><span>8.</span><input type="text" class="tts-answer" /></div>
+                                                    <div class="tts-answer-item"><span>9.</span><input type="text" class="tts-answer" /></div>
+                                                    <div class="tts-answer-item"><span>10.</span><input type="text" class="tts-answer" /></div>
+                                                    <button id="tts-answers-refresh" type="button" class="tts-btn" style="margin-left:auto">Clear</button>
+                                                </div>
+                                            </div>
+
+                                            <aside class="tts-player">
+                                                <h3>Audio</h3>
+                                                <div class="tts-progress-wrap">
+                                                    <div class="tts-progress-bar"><div id="tts-progress" class="tts-progress"><span id="tts-progress-handle" class="tts-progress-handle" role="slider" aria-label="Audio position" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></span></div></div>
+                                                    <div class="tts-time"><span id="tts-current">0:00</span> / <span id="tts-total">0:00</span></div>
+                                                </div>
+
+                                                <div class="tts-range-wrapper">
+                                                    <label for="tts-volume">Volume</label>
+                                                    <input id="tts-volume" type="range" min="0" max="100" value="80" aria-label="Volume" />
+                                                    <span id="tts-volume-val" class="tts-range-value" aria-live="polite">80%</span>
+                                                </div>
+                                                <div class="tts-range-wrapper">
+                                                    <label for="tts-speed">Speed</label>
+                                                    <input id="tts-speed" type="range" min="0.5" max="2" step="0.1" value="1" aria-label="Playback speed" />
+                                                    <span id="tts-speed-val" class="tts-range-value" aria-live="polite">1.0x</span>
+                                                </div>
+                                                <div class="tts-status" id="tts-status" role="status" aria-live="polite">Ready</div>
+                                            </aside>
+                                        </div>
+
+                                        <footer class="tts-footer">&copy; 2025</footer>
+                                    </div>
+                                </div>
+                        </section>
+
+                        <!-- TTS Voice Selection Modal -->
+                        <div id="tts-voice-modal" class="tts-voice-modal hidden" role="dialog" aria-modal="true" aria-labelledby="ttsVoiceTitle">
+                            <div class="tts-voice-modal-content">
+                                <h3 id="ttsVoiceTitle">Select Voice</h3>
+                                <p>Choose a voice to start the Text-to-Speech player.</p>
+                                <div class="tts-voice-options">
+                                    <button type="button" class="tts-btn voice-btn primary" data-voice-gender="female">Female Voice</button>
+                                    <button type="button" class="tts-btn voice-btn" data-voice-gender="male">Male Voice</button>
+                                </div>
+                                <div class="tts-voice-hint">You can change speed & volume later during playback.</div>
+                            </div>
+                        </div>
+
             <!-- Reading Section -->
             <section id="reading" class="section">
                 <div class="section-header">
@@ -223,6 +302,7 @@
                             <span id="reading-timer">60:00</span>
                             <button id="pause-reading" class="section-pause-btn" style="display: none;">Pause</button>
                             <button id="reset-reading" class="section-reset-btn" style="display: none;">Reset</button>
+                            <button id="reading-refresh" class="section-refresh-btn" type="button" title="Clear all answers">↺</button>
                         </div>
                     </div>
                 </div>
@@ -377,11 +457,12 @@
 
         <footer>
             <div class="controls">
-                <button id="nextSectionBtn" class="next-section-btn" style="display: none;">Go to Next Section</button>
-                <button id="finishTestBtn" class="finish-test-btn" style="display: none;">Finish Test</button>
-                <button id="saveBtn" class="save-btn">Save Progress</button>
+                <button id="nextSectionBtn" class="next-section-btn full-only" style="display: none;">Go to Next Section</button>
+                <button id="finishTestBtn" class="finish-test-btn full-only" style="display: none;">Finish Test</button>
+                <button id="saveBtn" class="save-btn full-only">Save Progress</button>
             </div>
         </footer>
+        <div class="site-footer-copyright">&copy; <span id="currentYear"></span> Md Sulyman Islam Sifat</div>
     </div>
 
     <!-- Custom Alert Modal -->
@@ -399,6 +480,19 @@
         </div>
     </div>
 
+    <!-- TTS section script (loads and auto-initializes the TTS UI) -->
+    <script src="public/sections/tts/tts-section.js"></script>
+
     <script src="script.js"></script>
+
+    <!-- Floating timer bar (appears when header scrolled out) -->
+    <div id="floating-timer" class="floating-timer hidden" role="status" aria-live="polite">
+        <div class="ft-left">
+            <span id="floating-timer-label">Section</span>
+        </div>
+        <div class="ft-right">
+            <span id="floating-timer-value">00:00</span>
+        </div>
+    </div>
 </body>
 </html>

@@ -48,6 +48,48 @@ class IELTSPractice {
         this.setupPageUnloadWarning();
         this.initDarkMode();
         this.showModal();
+
+        // Set dynamic year for footer
+        const yEl = document.getElementById('currentYear');
+        if(yEl){ yEl.textContent = new Date().getFullYear(); }
+
+        this.initFloatingTimer();
+    }
+
+    initFloatingTimer(){
+        const ft = document.getElementById('floating-timer');
+        if(!ft) return;
+        const labelEl = document.getElementById('floating-timer-label');
+        const valueEl = document.getElementById('floating-timer-value');
+        const headerObserver = new IntersectionObserver(entries => {
+            if(ft.dataset.enabled !== 'true') return; // don't show before mode selected
+            let anyNotIntersecting = entries.some(e=> !e.isIntersecting && e.target.classList.contains('section-header'));
+            if(anyNotIntersecting){
+                if(ft.classList.contains('hidden')){ ft.style.display='flex'; requestAnimationFrame(()=> ft.classList.remove('hidden')); }
+            } else {
+                ft.classList.add('hidden');
+                // keep display none after transition
+                setTimeout(()=>{ if(ft.classList.contains('hidden')) ft.style.display='none'; },400);
+            }
+        }, {root:null, threshold:0});
+        // Observe each section header
+        document.querySelectorAll('.section-header').forEach(h=> headerObserver.observe(h));
+
+        // Periodically sync timer text
+        setInterval(()=>{
+            if(!valueEl) return;
+            let activeSection = this.currentSection || 'listening';
+            labelEl.textContent = activeSection.charAt(0).toUpperCase()+activeSection.slice(1);
+            // Determine timer element
+            let timerSpan = null;
+            if(activeSection==='listening') timerSpan = document.getElementById('listening-timer');
+            else if(activeSection==='reading') timerSpan = document.getElementById('reading-timer');
+            else if(activeSection==='writing') {
+                // Could combine tasks, just show task1 or task2 whichever running
+                timerSpan = document.getElementById('task1-timer') || document.getElementById('task2-timer');
+            }
+            if(timerSpan) valueEl.textContent = timerSpan.textContent.trim();
+        }, 1000);
     }
 
     clearAllInputs() {
@@ -68,6 +110,19 @@ class IELTSPractice {
         
         // Reset answers object
         this.answers = {};
+    }
+
+    clearSectionInputs(section){
+        let container = null;
+        if(section==='listening') container = document.getElementById('listening');
+        if(section==='reading') container = document.getElementById('reading');
+        if(!container) return;
+        const inputs = container.querySelectorAll('.gap-input, input[type="text"], textarea');
+        inputs.forEach(inp=>{ inp.value=''; });
+        // Remove tracked answers for that section if stored
+        if(this.answers && this.answers[section]){
+            delete this.answers[section];
+        }
     }
 
     setupEventListeners() {
@@ -93,6 +148,15 @@ class IELTSPractice {
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const section = e.target.dataset.section;
+                if(section === 'tts') {
+                    const voiceModal = document.getElementById('tts-voice-modal');
+                    // Show only if user has not already chosen and TTS root exists
+                    if(voiceModal && !voiceModal.dataset.voiceChosen){
+                        voiceModal.classList.remove('hidden');
+                        // Prevent accidental background interactions while modal open
+                        voiceModal.focus();
+                    }
+                }
                 this.switchSection(section);
             });
         });
@@ -199,6 +263,26 @@ class IELTSPractice {
         document.getElementById('reset-reading').addEventListener('click', () => {
             this.resetSection('reading');
         });
+
+        // Refresh buttons to clear answers
+        const listeningRefresh = document.getElementById('listening-refresh');
+        if(listeningRefresh){
+            listeningRefresh.addEventListener('click', ()=>{
+                this.clearSectionInputs('listening');
+            });
+        }
+        const readingRefresh = document.getElementById('reading-refresh');
+        if(readingRefresh){
+            readingRefresh.addEventListener('click', ()=>{
+                this.clearSectionInputs('reading');
+            });
+        }
+        const ttsAnswersRefresh = document.getElementById('tts-answers-refresh');
+        if(ttsAnswersRefresh){
+            ttsAnswersRefresh.addEventListener('click', ()=>{
+                document.querySelectorAll('.tts-answer').forEach(inp=> inp.value='');
+            });
+        }
 
         // Section time input changes
         document.getElementById('listening-time').addEventListener('change', (e) => {
@@ -571,6 +655,9 @@ class IELTSPractice {
         this.testMode = mode;
         document.getElementById('testModeModal').style.display = 'none';
         document.getElementById('mainContainer').style.display = 'block';
+    // Allow floating timer usage after modal hidden
+    const ft = document.getElementById('floating-timer');
+    if(ft){ ft.dataset.enabled = 'true'; }
         
         // Show the change mode button
         document.getElementById('changeModeBtn').style.display = 'inline-block';
@@ -595,6 +682,14 @@ class IELTSPractice {
         // Show main timer and progress controls
         document.getElementById('mainTimerDisplay').style.display = 'flex';
         document.querySelector('footer').style.display = 'block';
+        // Hide TTS tab in full test
+        const ttsTab = document.querySelector('.nav-btn[data-section="tts"]');
+        if(ttsTab){ ttsTab.style.display='none'; }
+    // Hide refresh buttons in full mode
+    const refreshBtns = document.querySelectorAll('.section-refresh-btn, #tts-answers-refresh');
+    refreshBtns.forEach(b=> b.style.display='none');
+    // Show footer action buttons
+    document.querySelectorAll('.full-only').forEach(el=>{ el.style.display=''; });
         
         // Hide individual section controls
         document.querySelectorAll('.section-controls').forEach(control => {
@@ -617,6 +712,16 @@ class IELTSPractice {
         // Hide main timer and progress controls
         document.getElementById('mainTimerDisplay').style.display = 'none';
         document.querySelector('footer').style.display = 'none';
+        // Show TTS tab in individual mode
+        const ttsTab = document.querySelector('.nav-btn[data-section="tts"]');
+        if(ttsTab){ ttsTab.style.display='inline-block'; }
+    // Show refresh buttons only in individual mode
+    const refreshBtns = document.querySelectorAll('.section-refresh-btn');
+    refreshBtns.forEach(b=> b.style.display='inline-flex');
+    const ttsRefresh = document.getElementById('tts-answers-refresh');
+    if(ttsRefresh) ttsRefresh.style.display='inline-flex';
+    // Hide footer action buttons in individual mode
+    document.querySelectorAll('.full-only').forEach(el=>{ el.style.display='none'; });
         
         // Show individual section controls
         document.querySelectorAll('.section-controls').forEach(control => {
@@ -714,7 +819,7 @@ class IELTSPractice {
     }
 
     updateFooterButtons() {
-        const sections = ['listening', 'reading', 'writing'];
+        const sections = ['listening', 'reading', 'writing', 'tts'];
         const currentIndex = sections.indexOf(this.currentSection);
         
         // Hide finish button first
@@ -793,7 +898,7 @@ class IELTSPractice {
             return; // Don't proceed if button is disabled
         }
         
-        const sections = ['listening', 'reading', 'writing'];
+    const sections = ['listening', 'reading', 'writing', 'tts'];
         const currentIndex = sections.indexOf(this.currentSection);
         
         if (currentIndex < sections.length - 1) {

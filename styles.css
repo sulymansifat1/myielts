@@ -532,22 +532,39 @@ header h1 {
 }
 
 .section-header {
-    display: flex;
-    justify-content: space-between;
+    /* Sticky header directly under main site header + nav; lowered offset & minimal gap */
+    --section-sticky-offset: 84px; /* desktop/tablet offset; tweak if still overlapping */
+    display: grid;
+    grid-template-columns: minmax(160px,1fr) auto;
     align-items: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    padding: 20px 25px;
+    margin: 4px 0 10px; /* minimal vertical gap */
+    padding: 12px 18px 14px;
     background-color: var(--section-bg);
-    border-radius: 8px;
-    border-left: 3px solid var(--button-bg);
-    flex-wrap: wrap;
-    gap: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--button-bg);
+    gap: 12px 24px;
     position: sticky;
-    top: 60px;
-    z-index: 99;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    top: var(--section-sticky-offset);
+    z-index: 120; /* higher to sit above question content */
+    box-shadow: 0 3px 10px -2px rgba(0,0,0,0.18);
+    transition: background-color .3s, border-color .3s, box-shadow .3s, top .3s;
+    backdrop-filter: blur(2px);
+}
+
+/* Ensure first block after sticky header has inward spacing */
+.section-header + .questions-container,
+.section-header + .passage {
+    /* Extra breathing room so first question text isn't hidden behind sticky header */
+    padding-top: 8px;
+}
+
+/* Ensure scrolling to these blocks (e.g., via anchors or focus) doesn't hide behind sticky header */
+.questions-container,
+.passage,
+.question-group,
+.task {
+    scroll-margin-top: calc(var(--section-sticky-offset) + 10px);
 }
 
 .section-header h2 {
@@ -560,26 +577,32 @@ header h1 {
 
 .section-controls {
     display: flex;
-    align-items: center;
-    gap: 15px;
+    align-items: flex-start;
+    gap: 18px;
     flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .section-timer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: var(--timer-bg);
-    padding: 8px 12px;
-    border-radius: 4px;
-    border: 1px solid var(--timer-border);
-    position: sticky;
-    top: 60px;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 15px;
-    margin-bottom: 10px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg,var(--card-bg),var(--section-bg));
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 2px 6px -2px rgba(0,0,0,0.15);
+        margin: 0;
+}
+
+@media (max-width: 880px){
+    .section-header{grid-template-columns:1fr;align-items:start;}
+    .section-controls{justify-content:flex-start;}
+    .section-timer{margin-top:2px;}
+}
+@media (max-width:640px){
+    /* Slightly larger offset on narrow screens to clear stacked header elements */
+    .section-header{ --section-sticky-offset: 96px; }
 }
 
 .section-timer span {
@@ -772,6 +795,11 @@ header h1 {
 }
 
 /* Reading Section Styles */
+/* Removed overriding position:relative so sticky behavior is preserved */
+.section-refresh-btn{margin-left:8px;background:#2d3b4a;color:#e0f7fa;border:1px solid #355060;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:14px;line-height:1;display:inline-flex;align-items:center;justify-content:center;transition:background .2s,transform .15s}
+.section-refresh-btn:hover{background:#375469}
+.section-refresh-btn:active{transform:scale(.96)}
+.site-footer-copyright{margin-top:24px;text-align:center;font-size:12px;color:#78909c;padding:12px 0}
 .passage {
     margin-bottom: 20px;
     padding: 25px;
@@ -1152,8 +1180,15 @@ footer {
     }
     
     .section-header {
-        top: 60px;
+        /* Maintain variable-driven sticky offset; adjust for this breakpoint */
+        --section-sticky-offset: 72px;
     }
+/* Floating timer bar */
+.floating-timer{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;background:linear-gradient(135deg,var(--card-bg),var(--section-bg));border:1px solid var(--border-color);padding:8px 18px;border-radius:30px;box-shadow:0 6px 18px -4px rgba(0,0,0,.35);display:flex;align-items:center;gap:22px;font-size:14px;z-index:120;backdrop-filter:blur(6px);transition:opacity .35s,transform .35s}
+.floating-timer.hidden{opacity:0;pointer-events:none;transform:translate(-50%,10px);display:none}
+.floating-timer #floating-timer-label{font-weight:600;color:var(--text-color);opacity:.85}
+.floating-timer #floating-timer-value{font-family:monospace;font-size:15px;color:var(--button-bg);font-weight:600}
+@media (max-width:640px){.floating-timer{bottom:12px;padding:6px 14px;gap:14px;font-size:13px}}
     
     .section-timer {
         top: 60px;
@@ -1177,7 +1212,7 @@ footer {
     }
     
     .section-header {
-        top: 60px;
+        --section-sticky-offset: 70px;
     }
     
     .section-timer {
