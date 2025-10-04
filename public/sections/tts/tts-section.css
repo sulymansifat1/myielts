@@ -1,16 +1,41 @@
 /* Scoped TTS section styles (namespaced under #tts-section) */
 #tts-section {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
-#tts-section .tts-container{max-width:1200px;margin:0 auto;padding:16px;background:linear-gradient(135deg,#1a1a2e,#0f3460);color:#e0e0e0;border-radius:12px}
+#tts-section .tts-container{max-width:1200px;margin:0 auto;padding:16px;background:linear-gradient(135deg,var(--card-bg),var(--section-bg));color:var(--text-color);border:1px solid var(--border-color);border-radius:12px;transition:background .3s,color .3s,border-color .3s}
 #tts-section .tts-header{text-align:center;margin-bottom:12px}
 #tts-section .tts-header h2{color:#64ffda;margin-bottom:6px}
 #tts-section .tts-main{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}
-#tts-section textarea{width:100%;min-height:220px;padding:12px;border-radius:8px;border:1px solid #333;background:#2d2d3d;color:#e0e0e0}
+#tts-section textarea{width:100%;min-height:220px;padding:12px;border-radius:8px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-color);transition:background .3s,border-color .3s,color .3s}
 #tts-section .tts-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
 #tts-section .tts-buttons button{margin-left:8px}
-#tts-section .tts-player{background:#1e1e2e;padding:12px;border-radius:8px;border:1px solid #333}
-#tts-section .tts-progress-bar{width:100%;height:8px;background:#37474f;border-radius:4px;overflow:hidden;margin-bottom:8px}
-#tts-section .tts-progress{height:100%;background:linear-gradient(45deg,#64ffda,#00bcd4);width:0%}
-#tts-section .tts-status{margin-top:10px;padding:10px;background:#2d2d3d;border-radius:6px;text-align:center;border-left:4px solid #64ffda}
-#tts-section .tts-btn{padding:8px 12px;border-radius:6px;border:none;cursor:pointer;background:#37474f;color:#e0e0e0}
-#tts-section .tts-btn.primary{background:linear-gradient(45deg,#64ffda,#00bcd4);color:#1a1a2e}
+#tts-section .tts-player{background:var(--card-bg);padding:12px;border-radius:8px;border:1px solid var(--border-color);transition:background .3s,border-color .3s}
+#tts-section .tts-progress-bar{width:100%;height:8px;background:var(--input-border);border-radius:4px;overflow:hidden;margin-bottom:8px;transition:background .3s}
+#tts-section .tts-progress{height:100%;background:linear-gradient(45deg,var(--button-bg),var(--button-hover));width:0%;transition:background .3s}
+#tts-section .tts-progress{position:relative}
+#tts-section .tts-progress-handle{position:absolute;top:50%;right:0;transform:translate(50%,-50%);width:14px;height:14px;background:var(--button-bg);border-radius:50%;box-shadow:0 0 0 2px var(--card-bg),0 0 4px rgba(0,0,0,.4);cursor:pointer;transition:background .3s}
+#tts-section .tts-progress-handle:focus{outline:2px solid #fff;outline-offset:2px}
+#tts-section .tts-progress-bar:active .tts-progress-handle{transform:translate(50%,-50%) scale(1.15)}
+#tts-section .tts-range-wrapper{display:flex;align-items:center;gap:10px;margin:10px 0}
+#tts-section .tts-range-wrapper label{flex:0 0 60px;font-size:13px;color:var(--text-color);opacity:.75;transition:color .3s,opacity .3s}
+#tts-section .tts-range-wrapper input[type=range]{flex:1;accent-color:var(--button-bg)}
+#tts-section .tts-range-value{min-width:44px;text-align:right;font-variant-numeric:tabular-nums;font-size:13px;color:var(--button-bg);transition:color .3s}
+#tts-section .tts-answer-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;background:var(--card-bg);padding:8px;border:1px solid var(--border-color);border-radius:8px;transition:background .3s,border-color .3s}
+#tts-section .tts-answer-item{display:flex;align-items:center;gap:4px;background:var(--section-bg);padding:4px 6px;border-radius:6px;border:1px solid var(--border-color);transition:background .3s,border-color .3s}
+#tts-section .tts-answer-item span{font-size:12px;color:var(--text-color);opacity:.6;transition:color .3s,opacity .3s}
+#tts-section .tts-answer{width:70px;padding:4px 6px;border-radius:4px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-color);font-size:12px;transition:background .3s,border-color .3s,color .3s}
+#tts-section .tts-answer:focus{outline:2px solid var(--button-bg);outline-offset:1px}
+@media (max-width:640px){#tts-section .tts-answer{width:54px}}
+.hidden{display:none !important}
+.tts-voice-modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1000}
+.tts-voice-modal-content{background:linear-gradient(135deg,var(--card-bg),var(--section-bg));padding:28px 32px;border-radius:14px;max-width:420px;width:92%;border:1px solid var(--border-color);box-shadow:0 6px 24px -4px rgba(0,0,0,.6);transition:background .3s,border-color .3s}
+.tts-voice-modal-content h3{margin:0 0 10px;color:var(--button-bg);font-size:22px;transition:color .3s}
+.tts-voice-options{display:flex;gap:14px;margin:16px 0}
+.tts-voice-options .voice-btn{flex:1;font-size:15px;padding:12px 10px}
+#tts-section .tts-status{margin-top:10px;padding:10px;background:var(--section-bg);border-radius:6px;text-align:center;border-left:4px solid var(--button-bg);color:var(--text-color);transition:background .3s,border-color .3s,color .3s}
+#tts-section .tts-btn{padding:8px 12px;border-radius:6px;border:none;cursor:pointer;background:var(--button-bg);color:#fff;transition:background .25s,color .25s,opacity .25s}
+#tts-section .tts-btn:hover{background:var(--button-hover)}
+#tts-section .tts-btn.primary{background:linear-gradient(45deg,var(--button-bg),var(--button-hover));color:#fff}
+.tts-voice-hint{font-size:12px;color:var(--text-color);opacity:.65;transition:color .3s,opacity .3s}
+.tts-btn.voice-btn.primary{background:linear-gradient(45deg,var(--button-bg),var(--button-hover));color:#fff}
+#tts-section .tts-extra{margin-top:10px;display:flex;gap:8px;align-items:center}
+#tts-section select#tts-voice{background:var(--input-bg);color:var(--text-color);border:1px solid var(--input-border);padding:6px;border-radius:6px;transition:background .3s,border-color .3s,color .3s}
 @media (max-width:1024px){#tts-section .tts-main{grid-template-columns:1fr}}

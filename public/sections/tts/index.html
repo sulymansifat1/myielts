@@ -13,10 +13,7 @@
         <div class="tts-row tts-controls">
           <div class="tts-wordcount">Words: <span id="tts-wordcount">0</span></div>
           <div class="tts-buttons">
-            <button id="tts-play" class="tts-btn primary" disabled>Play</button>
-            <button id="tts-pause" class="tts-btn" disabled>Pause</button>
-            <button id="tts-stop" class="tts-btn" disabled>Stop</button>
-            <button id="tts-replay" class="tts-btn" disabled>Replay</button>
+            <button id="tts-play" class="tts-btn primary" disabled data-state="ready">Play</button>
           </div>
         </div>
       </div>
@@ -24,12 +21,20 @@
       <aside class="tts-player">
         <h3>Audio</h3>
         <div class="tts-progress-wrap">
-          <div class="tts-progress-bar"><div id="tts-progress" class="tts-progress"></div></div>
+          <div class="tts-progress-bar"><div id="tts-progress" class="tts-progress"><span id="tts-progress-handle" class="tts-progress-handle" role="slider" aria-label="Audio position" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></span></div></div>
           <div class="tts-time"><span id="tts-current">0:00</span> / <span id="tts-total">0:00</span></div>
         </div>
 
-        <label>Volume <input id="tts-volume" type="range" min="0" max="100" value="80"></label>
-        <label>Speed <input id="tts-speed" type="range" min="0.5" max="2" step="0.1" value="1"></label>
+        <div class="tts-range-wrapper">
+          <label for="tts-volume">Volume</label>
+          <input id="tts-volume" type="range" min="0" max="100" value="80" aria-label="Volume" />
+          <span id="tts-volume-val" class="tts-range-value" aria-live="polite">80%</span>
+        </div>
+        <div class="tts-range-wrapper">
+          <label for="tts-speed">Speed</label>
+          <input id="tts-speed" type="range" min="0.5" max="2" step="0.1" value="1" aria-label="Playback speed" />
+          <span id="tts-speed-val" class="tts-range-value" aria-live="polite">1.0x</span>
+        </div>
 
         <div class="tts-status" id="tts-status">Ready</div>
       </aside>
