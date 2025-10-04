@@ -714,7 +714,7 @@ class IELTSPractice {
     }
 
     updateFooterButtons() {
-        const sections = ['listening', 'reading', 'writing'];
+        const sections = ['listening', 'reading', 'writing', 'tts'];
         const currentIndex = sections.indexOf(this.currentSection);
         
         // Hide finish button first
@@ -793,7 +793,7 @@ class IELTSPractice {
             return; // Don't proceed if button is disabled
         }
         
-        const sections = ['listening', 'reading', 'writing'];
+    const sections = ['listening', 'reading', 'writing', 'tts'];
         const currentIndex = sections.indexOf(this.currentSection);
         
         if (currentIndex < sections.length - 1) {

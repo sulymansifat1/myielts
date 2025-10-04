@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IELTS Practice - Listening, Reading & Writing</title>
     <link rel="stylesheet" href="styles.css">
+        <!-- TTS section styles -->
+        <link rel="stylesheet" href="public/sections/tts/tts-section.css">
 </head>
 <body>
     <!-- Modal for Test Mode Selection -->
@@ -58,6 +60,7 @@
             <button class="nav-btn active" data-section="listening">Listening</button>
             <button class="nav-btn" data-section="reading">Reading</button>
             <button class="nav-btn" data-section="writing">Writing</button>
+            <button class="nav-btn" data-section="tts">TTS</button>
         </nav>
 
         <main>
@@ -208,6 +211,50 @@
                     </div>
                 </div>
             </section>
+
+                        <!-- Text-to-Speech Section -->
+                        <section id="tts" class="section">
+                                <!-- Embedded TTS module (namespaced inside #tts-section) -->
+                                <div id="tts-section" class="tts-section">
+                                    <div class="tts-container">
+                                        <header class="tts-header">
+                                            <h2>Text-to-Speech</h2>
+                                            <p>Convert your text to a natural-sounding voice.</p>
+                                        </header>
+
+                                        <div class="tts-main">
+                                            <div class="tts-input">
+                                                <label for="tts-text-input">Enter text (max 5000 words)</label>
+                                                <textarea id="tts-text-input" placeholder="Paste your text here..." rows="10"></textarea>
+                                                <div class="tts-row tts-controls">
+                                                    <div class="tts-wordcount">Words: <span id="tts-wordcount">0</span></div>
+                                                    <div class="tts-buttons">
+                                                        <button id="tts-play" class="tts-btn primary" disabled>Play</button>
+                                                        <button id="tts-pause" class="tts-btn" disabled>Pause</button>
+                                                        <button id="tts-stop" class="tts-btn" disabled>Stop</button>
+                                                        <button id="tts-replay" class="tts-btn" disabled>Replay</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <aside class="tts-player">
+                                                <h3>Audio</h3>
+                                                <div class="tts-progress-wrap">
+                                                    <div class="tts-progress-bar"><div id="tts-progress" class="tts-progress"></div></div>
+                                                    <div class="tts-time"><span id="tts-current">0:00</span> / <span id="tts-total">0:00</span></div>
+                                                </div>
+
+                                                <label>Volume <input id="tts-volume" type="range" min="0" max="100" value="80"></label>
+                                                <label>Speed <input id="tts-speed" type="range" min="0.5" max="2" step="0.1" value="1"></label>
+
+                                                <div class="tts-status" id="tts-status">Ready</div>
+                                            </aside>
+                                        </div>
+
+                                        <footer class="tts-footer">&copy; 2025</footer>
+                                    </div>
+                                </div>
+                        </section>
 
             <!-- Reading Section -->
             <section id="reading" class="section">
